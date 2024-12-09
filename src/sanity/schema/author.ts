@@ -12,6 +12,17 @@ export const authors = {
             validation:(rule)=>{
                 return rule.required()
             }
+        }),
+        defineField({
+            name:"slug",
+            type:"slug",
+            title:"Slug",
+            validation:(rule)=>{
+                return rule.required()
+            },
+            options:{
+                source:"author"
+            }
         })
     ]
 }

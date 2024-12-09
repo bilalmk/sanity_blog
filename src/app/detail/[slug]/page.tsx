@@ -3,9 +3,9 @@ import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { PortableText } from "next-sanity";
 
-const getData = async(id:string)=>{
+const getData = async(slug:string)=>{
     try{
-        const query = `*[_type=="blogs" && _id=="${id}"][0]{
+        const query = `*[_type=="blogs" && slug.current=="${slug}"][0]{
         _id,
         heading,
         detail,
@@ -13,7 +13,7 @@ const getData = async(id:string)=>{
         "category":category->category,
         "author":author->author,
         image}`
-        console.log(query)
+        //console.log(query)
         const blog = await client.fetch(query,{},{cache:"no-store"})
         if(blog)
         {
@@ -33,8 +33,8 @@ const getData = async(id:string)=>{
     
 }
 
-export default async function Detail({params}:{params:{id:string}}) {
-    const blog = await getData(params.id)
+export default async function Detail({params}:{params:{slug:string}}) {
+    const blog = await getData(params.slug)
     console.log(blog)
     return (
         <div className="bg-gray-100 min-h-screen py-10 px-4">
@@ -65,9 +65,9 @@ export default async function Detail({params}:{params:{id:string}}) {
             <span>by {blog.author}</span>
           </div>
               
-              <p className="text-gray-700 leading-relaxed mb-6">
+              <div className="text-gray-700 leading-relaxed mb-6">
                 <PortableText value={blog.detail}/>
-               </p>
+               </div>
    
           
           
